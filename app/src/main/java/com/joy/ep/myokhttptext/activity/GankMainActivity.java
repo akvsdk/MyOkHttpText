@@ -3,20 +3,19 @@ package com.joy.ep.myokhttptext.activity;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.joy.ep.myokhttptext.R;
-import com.joy.ep.myokhttptext.base.BaseActivity;
 import com.joy.ep.myokhttptext.fragment.AllFragment;
+import com.joy.ep.myokhttptext.fragment.FuliFragment;
 
 /**
  * author   Joy
@@ -24,10 +23,8 @@ import com.joy.ep.myokhttptext.fragment.AllFragment;
  * version:  V1.0
  * Description:
  */
-public class GankMainActivity extends BaseActivity {
+public class GankMainActivity extends AppCompatActivity {
     private Toolbar toolbar;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
     private DrawerLayout mDrawerLayout;
     private NavigationView navigationView;
     private CoordinatorLayout lay_content;
@@ -49,7 +46,7 @@ public class GankMainActivity extends BaseActivity {
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         lay_content = (CoordinatorLayout) findViewById(R.id.content);
         setSupportActionBar(toolbar);
-
+        toolbar.setTitle("干货集中营");
         ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeButtonEnabled(true);
@@ -95,11 +92,17 @@ public class GankMainActivity extends BaseActivity {
 
     private void selectDrawerItem(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
-            case R.id.nav_weather:
-                Toast.makeText(this, "6", Toast.LENGTH_SHORT).show();
+            case R.id.nav_fuli:
+                switchContent(currentFragment, new FuliFragment());
                 break;
             case R.id.nav_home:
-                switchFragment(new AllFragment());
+                switchContent(currentFragment, new AllFragment());
+                break;
+            case R.id.nav_android:
+                //    switchContent(currentFragment,new AndroidFragment());
+                break;
+            case R.id.nav_ios:
+                //      switchFragment(new IosFragment());
                 break;
         }
     }
@@ -109,6 +112,19 @@ public class GankMainActivity extends BaseActivity {
         if (currentFragment == null || !fragment.getClass().getName().equals(currentFragment.getClass().getName())) {
             getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
             currentFragment = fragment;
+        }
+    }
+
+    public void switchContent(Fragment from, Fragment to) {
+        if (currentFragment == null || !to.getClass().getName().equals(currentFragment.getClass().getName())) {
+            currentFragment = to;
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction().setCustomAnimations(
+                    android.R.anim.fade_in, android.R.anim.fade_out);
+            if (!to.isAdded()) {    // 先判断是否被add过
+                transaction.hide(from).add(R.id.container, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+            } else {
+                transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.cjj.http.Http;
 import com.cjj.listener.CallbackListener;
 import com.joy.ep.myokhttptext.R;
-import com.joy.ep.myokhttptext.base.BaseActivity;
+import com.joy.ep.myokhttptext.common.BaseActivity;
 import com.joy.ep.myokhttptext.enity.NewBean;
 import com.joy.ep.myokhttptext.http.AppDao;
 
@@ -48,7 +48,6 @@ public class MainActivity extends BaseActivity {
     }
 
     public void postHttp(View v) {
-        showProDialog("sb");
         handler.post(myRunnable);
         AppDao.getInstance().getNewsList(new CallbackListener<String>() {
             @Override
@@ -77,7 +76,6 @@ public class MainActivity extends BaseActivity {
 
             }
         });
-        closeProDialog();
     }
 
     public void postBean(View v) {

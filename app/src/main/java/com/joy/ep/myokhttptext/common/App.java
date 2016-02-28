@@ -1,4 +1,4 @@
-package com.joy.ep.myokhttptext.base;
+package com.joy.ep.myokhttptext.common;
 
 import android.app.Application;
 import android.content.Context;

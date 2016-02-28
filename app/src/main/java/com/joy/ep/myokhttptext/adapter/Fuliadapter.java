@@ -2,17 +2,17 @@ package com.joy.ep.myokhttptext.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.ViewGroup.LayoutParams;
 
 import com.cjj.http.Http;
 import com.joy.ep.myokhttptext.R;
 import com.joy.ep.myokhttptext.enity.GanHuo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,15 +21,21 @@ import java.util.List;
  * version:  V1.0
  * Description:
  */
-public class Alladapter extends RecyclerView.Adapter<Alladapter.ViewHolder> {
+public class Fuliadapter extends RecyclerView.Adapter<Fuliadapter.ViewHolder> {
     private List<GanHuo> ganHuos;
     private LayoutInflater mInflater;
     private Context mtx;
+    private List<Integer> mHeights;
 
 
-    public Alladapter(Context context, List<GanHuo> bean) {
+    public Fuliadapter(Context context, List<GanHuo> bean) {
         mtx = context;
+        mInflater = LayoutInflater.from(context);
         this.ganHuos = bean;
+        mHeights = new ArrayList<Integer>();
+        for (int i = 0; i < ganHuos.size(); i++) {
+            mHeights.add((int) (100 + Math.random() * 400));
+        }
     }
 
     private OnItemClickListener onItemClickListener;
@@ -40,33 +46,21 @@ public class Alladapter extends RecyclerView.Adapter<Alladapter.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        mInflater = LayoutInflater.from(parent.getContext());
-        View view = mInflater.inflate(R.layout.all_item, parent, false);
+        View view = mInflater.inflate(R.layout.fuli_item, parent, false);
+
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final GanHuo ganHuo = ganHuos.get(position);
-        if (!ganHuo.getType().equals("福利")) {
-            holder.tv.setVisibility(View.VISIBLE);
-            holder.img.setVisibility(View.GONE);
-            holder.tv.setText(Html.fromHtml("<font color=blue>(" + ganHuo.getType() + ")  </font>" +
-                    "<a href=\"" + ganHuo.getUrl() + "\">" + ganHuo.getDesc() + "</a>"
-                    + "<font color=red>[" + ganHuo.getWho() + "]</font>"));
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (onItemClickListener != null) {
-                        onItemClickListener.onItemClick(holder.itemView, ganHuo);
-                    }
-                }
-            });
-        } else {
-            holder.tv.setVisibility(View.GONE);
-            holder.img.setVisibility(View.VISIBLE);
-            Http.showimg(mtx, holder.img, ganHuo.getUrl());
+        LayoutParams lp = holder.img.getLayoutParams();
+        if (mHeights.size() != 0) {
+            lp.height = mHeights.get(position);
+            holder.img.setLayoutParams(lp);
         }
+
+        Http.showimg(mtx, holder.img, ganHuo.getUrl());
     }
 
     public interface OnItemClickListener {
@@ -80,13 +74,12 @@ public class Alladapter extends RecyclerView.Adapter<Alladapter.ViewHolder> {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView tv;
         private ImageView img;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            tv = (TextView) itemView.findViewById(R.id.alltv);
             img = (ImageView) itemView.findViewById(R.id.allimg);
         }
     }
+
 }
