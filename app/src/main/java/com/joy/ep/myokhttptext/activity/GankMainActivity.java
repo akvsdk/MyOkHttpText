@@ -92,7 +92,7 @@ public class GankMainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(final MenuItem menuItem) {
 
                 menuItem.setChecked(true);
-                selectDrawerItem(menuItem);
+                 selectDrawerItem(menuItem);
                 mDrawerLayout.closeDrawers();
 
                 return true;
