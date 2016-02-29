@@ -11,11 +11,17 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.joy.ep.myokhttptext.R;
 import com.joy.ep.myokhttptext.fragment.AllFragment;
+import com.joy.ep.myokhttptext.fragment.AndroidFragment;
 import com.joy.ep.myokhttptext.fragment.FuliFragment;
+import com.joy.ep.myokhttptext.fragment.IosFragment;
+import com.joy.ep.myokhttptext.fragment.PlayFragment;
+import com.joy.ep.myokhttptext.fragment.ResFragment;
 
 /**
  * author   Joy
@@ -32,6 +38,7 @@ public class GankMainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle abdt;
 
     private Fragment currentFragment;
+    private long exitTime;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,11 +52,14 @@ public class GankMainActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         lay_content = (CoordinatorLayout) findViewById(R.id.content);
-        setSupportActionBar(toolbar);
         toolbar.setTitle("干货集中营");
+        setSupportActionBar(toolbar);
+        toolbar.setSubtitle("Gank.Io");
         ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeButtonEnabled(true);
+
+        exitTime = System.currentTimeMillis();
 
         //开启汉堡动画
         abdt = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name);
@@ -80,6 +90,7 @@ public class GankMainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(final MenuItem menuItem) {
+
                 menuItem.setChecked(true);
                 selectDrawerItem(menuItem);
                 mDrawerLayout.closeDrawers();
@@ -99,10 +110,16 @@ public class GankMainActivity extends AppCompatActivity {
                 switchContent(currentFragment, new AllFragment());
                 break;
             case R.id.nav_android:
-                //    switchContent(currentFragment,new AndroidFragment());
+                switchContent(currentFragment, new AndroidFragment());
                 break;
             case R.id.nav_ios:
-                //      switchFragment(new IosFragment());
+                switchContent(currentFragment, new IosFragment());
+                break;
+            case R.id.nav_play:
+                switchContent(currentFragment, new PlayFragment());
+                break;
+            case R.id.nav_res:
+                switchContent(currentFragment, new ResFragment());
                 break;
         }
     }
@@ -126,5 +143,22 @@ public class GankMainActivity extends AppCompatActivity {
                 transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
             }
         }
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                mDrawerLayout.closeDrawers();
+            }
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

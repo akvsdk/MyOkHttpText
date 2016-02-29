@@ -23,11 +23,11 @@ import java.util.List;
 
 /**
  * author   Joy
- * Date:  2016/2/26.
+ * Date:  2016/2/29.
  * version:  V1.0
  * Description:
  */
-public class AllFragment extends BaseFragment {
+public class AndroidFragment extends BaseFragment {
 
     private List<GanHuo> ganHuos = new ArrayList<>();
     private RecyclerView rcy;
@@ -41,8 +41,6 @@ public class AllFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.all_frg, container, false);
         rcy = (RecyclerView) view.findViewById(R.id.rcy);
-//        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
-//        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
 
         adapter = new Alladapter(getActivity(), ganHuos);
         rcy.setAdapter(adapter);
@@ -76,8 +74,9 @@ public class AllFragment extends BaseFragment {
         return view;
     }
 
+
     public void getdate(int pag) {
-        AppDao.getInstance().gankIo(0, pag, new CallbackListener<List<GanHuo>>() {
+        AppDao.getInstance().gankIo(2, pag, new CallbackListener<List<GanHuo>>() {
             @Override
             public void onSuccess(List<GanHuo> result) {
                 if (page == 1) {

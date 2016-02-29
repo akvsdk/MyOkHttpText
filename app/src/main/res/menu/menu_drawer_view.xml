@@ -16,17 +16,19 @@
         <item
             android:id="@+id/nav_ios"
             android:icon="@mipmap/ic_wb_sunny_black"
-            android:title="iOS"/>
+            android:title="IOS"/>
     </group>
 
-    <item android:title="More  items">
+    <item android:title="更 多">
         <menu>
             <item
+                android:id="@+id/nav_play"
                 android:icon="@mipmap/ic_wb_iridescent_black"
-                android:title="item 1"/>
+                android:title="休息视频"/>
             <item
+                android:id="@+id/nav_res"
                 android:icon="@mipmap/ic_star_border_whitee"
-                android:title="item 2"/>
+                android:title="拓展资源"/>
         </menu>
     </item>
 

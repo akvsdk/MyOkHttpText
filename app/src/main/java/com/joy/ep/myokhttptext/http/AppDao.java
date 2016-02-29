@@ -3,7 +3,6 @@ package com.joy.ep.myokhttptext.http;
 import com.cjj.http.Http;
 import com.cjj.listener.CallbackListener;
 import com.joy.ep.myokhttptext.enity.GanHuo;
-import com.joy.ep.myokhttptext.enity.TestBean;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,8 +16,6 @@ import java.util.Map;
  */
 public class AppDao {
     private static AppDao instance;
-    String url = "http://222.177.210.200/supplier/news/getNewsList";
-    String tag = "http://120.25.0.216/userfindmacth.json";
 
 
     public static AppDao getInstance() {
@@ -41,19 +38,7 @@ public class AppDao {
     public void getNewsList(CallbackListener<String> listener) {
         Map<String, String> map = createMap();
         map.put("newsTypeVal", "CC");
-        Http.post(url, map, listener);
-    }
-
-    public void userfindmacth(CallbackListener<TestBean> listener) {
-        Map<String, String> params = new HashMap<>();
-        params.put("pageNo", "1");
-        Http.post(tag, params, listener);
-    }
-
-    public void userfindmacthS(CallbackListener<String> listener) {
-        Map<String, String> params = new HashMap<>();
-        params.put("pageNo", "1");
-        Http.post(tag, params, listener);
+        Http.post("url", map, listener);
     }
 
     public void gankIo(int index, int page, CallbackListener<List<GanHuo>> listener) {
