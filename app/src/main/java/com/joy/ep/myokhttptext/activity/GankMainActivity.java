@@ -1,5 +1,6 @@
 package com.joy.ep.myokhttptext.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -121,6 +122,8 @@ public class GankMainActivity extends AppCompatActivity {
             case R.id.nav_res:
                 switchContent(currentFragment, new ResFragment());
                 break;
+            case R.id.nav_about:
+                startActivity(new Intent(this,AboutActivity.class));
         }
     }
 

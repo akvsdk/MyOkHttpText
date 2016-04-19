@@ -32,7 +32,6 @@ public class IntentUtils {
 
     public static void intUrl(Context context, String url) {
         Intent it = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        it.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
         context.startActivity(it);
     }
 

@@ -16,7 +16,6 @@ import com.joy.ep.myokhttptext.common.BaseFragment;
 import com.joy.ep.myokhttptext.enity.GanHuo;
 import com.joy.ep.myokhttptext.http.AppDao;
 import com.joy.ep.myokhttptext.util.IntentUtils;
-import com.mugen.attachers.BaseAttacher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,6 @@ public class PlayFragment extends BaseFragment {
     private List<GanHuo> ganHuos = new ArrayList<>();
     private RecyclerView rcy;
     private Alladapter adapter;
-    private BaseAttacher attacher;
 
     private int page = 1;
     private MaterialRefreshLayout refresh;
