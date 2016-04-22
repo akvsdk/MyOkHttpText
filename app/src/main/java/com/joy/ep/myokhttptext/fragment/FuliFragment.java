@@ -1,6 +1,8 @@
 package com.joy.ep.myokhttptext.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,11 +13,11 @@ import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.cjj.listener.CallbackListener;
 import com.joy.ep.myokhttptext.R;
+import com.joy.ep.myokhttptext.activity.ImageActvity;
 import com.joy.ep.myokhttptext.adapter.Fuliadapter;
 import com.joy.ep.myokhttptext.common.BaseFragment;
 import com.joy.ep.myokhttptext.enity.GanHuo;
 import com.joy.ep.myokhttptext.http.AppDao;
-import com.joy.ep.myokhttptext.util.IntentUtils;
 import com.socks.library.KLog;
 
 import java.util.ArrayList;
@@ -43,9 +45,16 @@ public class FuliFragment extends BaseFragment {
         rcy.setAdapter(adapter);
         rcy.setLayoutManager(new LinearLayoutManager(getActivity()));
         refresh = (MaterialRefreshLayout) view.findViewById(R.id.refresh);
-        rcy.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rcy.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        adapter.setOnItemClickListener(new Fuliadapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, GanHuo bean) {
+                Intent intent = new Intent(getActivity(), ImageActvity.class);
+                intent.putExtra("url", bean.getUrl());
+                startActivity(intent);
+            }
+        });
         refresh.setLoadMore(true);
-
         refresh.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
@@ -62,13 +71,6 @@ public class FuliFragment extends BaseFragment {
             }
         });
 
-        adapter.setOnItemClickListener(new Fuliadapter.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(View v, GanHuo bean) {
-                IntentUtils.intUrl(getContext(), bean.getUrl());
-            }
-        });
         getdate(1);
         return view;
     }

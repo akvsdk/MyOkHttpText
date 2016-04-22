@@ -5,12 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.TextView;
 
 import com.cjj.http.Http;
 import com.joy.ep.myokhttptext.R;
 import com.joy.ep.myokhttptext.enity.GanHuo;
+import com.joy.ep.myokhttptext.view.RatioImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,7 @@ public class Fuliadapter extends RecyclerView.Adapter<Fuliadapter.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.fuli_item, parent, false);
+        View view = mInflater.inflate(R.layout.item_girl, parent, false);
 
         return new ViewHolder(view);
     }
@@ -59,8 +60,16 @@ public class Fuliadapter extends RecyclerView.Adapter<Fuliadapter.ViewHolder> {
             lp.height = mHeights.get(position);
             holder.img.setLayoutParams(lp);
         }
-
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(holder.itemView, ganHuo);
+                }
+            }
+        });
         Http.showimg(mtx, holder.img, ganHuo.getUrl());
+        holder.mTextView.setText(ganHuo.getPublishedAt());
     }
 
     public interface OnItemClickListener {
@@ -74,11 +83,13 @@ public class Fuliadapter extends RecyclerView.Adapter<Fuliadapter.ViewHolder> {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView img;
+        private TextView mTextView;
+        private RatioImageView img;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            img = (ImageView) itemView.findViewById(R.id.allimg);
+            img = (RatioImageView) itemView.findViewById(R.id.iv_index_photo);
+            mTextView = (TextView) itemView.findViewById(R.id.tv_time);
         }
     }
 

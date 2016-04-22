@@ -9,10 +9,15 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.joy.ep.myokhttptext.BuildConfig;
 import com.joy.ep.myokhttptext.R;
+import com.joy.ep.myokhttptext.util.StatusBarCompat;
 import com.socks.library.KLog;
 import com.youzan.titan.QuickAdapter;
 import com.youzan.titan.TitanRecyclerView;
@@ -36,12 +41,13 @@ public class AboutActivity extends AppCompatActivity {
     private QuickAdapter<String> mAdapter;
     // private TitanAdapter<String> mAdapter;
     private List<String> mStrings = new ArrayList<>();
+    private TextView mTextView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        // StatusBarCompat.compat(this, getResources().getColor(R.color.colorAccent));
+        StatusBarCompat.compat(this, getResources().getColor(R.color.colorAccent));
         initView();
     }
 
@@ -49,7 +55,8 @@ public class AboutActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         mRecyclerView = (TitanRecyclerView) findViewById(R.id.myRecy);
-
+        mTextView = (TextView) findViewById(R.id.tv_app_version);
+        mTextView.setText(BuildConfig.VERSION_CODE + "");
         mCollapsingToolbarLayout.setTitle("Joy");
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null)
@@ -119,4 +126,19 @@ public class AboutActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                //在Action Bar的最左边，就是Home icon和标题的区域
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
+    }
 }

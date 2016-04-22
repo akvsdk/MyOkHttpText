@@ -53,7 +53,7 @@ public class Alladapter extends RecyclerView.Adapter<Alladapter.ViewHolder> {
             holder.img.setVisibility(View.GONE);
             holder.tv.setText(Html.fromHtml("<font color=blue>(" + ganHuo.getType() + ")  </font>" +
                     "<a href=\"" + ganHuo.getUrl() + "\">" + ganHuo.getDesc() + "</a>"
-                    + "<font color=red>[" + ganHuo.getWho() + "]</font>"));
+                    + "     <font color=red>[" + ganHuo.getWho() + "]</font>"));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

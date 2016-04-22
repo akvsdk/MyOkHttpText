@@ -66,7 +66,7 @@ public class AppDao {
                 type = "前端";
                 break;
         }
-        String gank = "http://gank.avosapps.com/api/data/" + type + "/30/" + page;
+        String gank = "http://gank.io/api/data/" + type + "/30/" + page;
         Http.get(gank, listener);
     }
 

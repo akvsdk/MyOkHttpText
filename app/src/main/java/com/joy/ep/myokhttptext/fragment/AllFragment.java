@@ -40,11 +40,10 @@ public class AllFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.all_frg, container, false);
         rcy = (RecyclerView) view.findViewById(R.id.rcy);
-//        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
-//        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
 
         adapter = new Alladapter(getActivity(), ganHuos);
         rcy.setAdapter(adapter);
+        //rcy.setOnScrollChangeListener(new HidingScrollListener(this));
         refresh = (MaterialRefreshLayout) view.findViewById(R.id.refresh);
         rcy.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter.setOnItemClickListener(new Alladapter.OnItemClickListener() {

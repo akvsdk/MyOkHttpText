@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -35,7 +34,7 @@ public class GankMainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private NavigationView navigationView;
     private CoordinatorLayout lay_content;
-    private ActionBar ab;
+    //    private ActionBar ab;
     private ActionBarDrawerToggle abdt;
 
     private Fragment currentFragment;
@@ -56,22 +55,23 @@ public class GankMainActivity extends AppCompatActivity {
         toolbar.setTitle("干货集中营");
         setSupportActionBar(toolbar);
         toolbar.setSubtitle("Gank.Io");
-        ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeButtonEnabled(true);
+
+//        ab = getSupportActionBar();
+//        ab.setDisplayHomeAsUpEnabled(true);
+//        ab.setHomeButtonEnabled(true);
 
         exitTime = System.currentTimeMillis();
 
         //开启汉堡动画
-        abdt = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name);
+        abdt = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name);
         mDrawerLayout.setDrawerListener(abdt);
         abdt.syncState();
+
+        switchFragment(new AllFragment());
 
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
-
-        switchFragment(new AllFragment());
 
 
     }
@@ -91,11 +91,9 @@ public class GankMainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(final MenuItem menuItem) {
-
                 menuItem.setChecked(true);
-                 selectDrawerItem(menuItem);
+                selectDrawerItem(menuItem);
                 mDrawerLayout.closeDrawers();
-
                 return true;
             }
         });
@@ -123,7 +121,7 @@ public class GankMainActivity extends AppCompatActivity {
                 switchContent(currentFragment, new ResFragment());
                 break;
             case R.id.nav_about:
-                startActivity(new Intent(this,AboutActivity.class));
+                startActivity(new Intent(this, AboutActivity.class));
         }
     }
 
