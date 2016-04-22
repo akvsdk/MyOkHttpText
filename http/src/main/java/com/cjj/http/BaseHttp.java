@@ -230,28 +230,23 @@ public class BaseHttp<T> {
                         @Override
                         public void run() {
                             listener.onStringResult(results);
+                            try {
+                                Class<T> clazz = GenericsUtils.getSuperClassGenricType(listener.getClass());
+                                if (clazz == String.class) {        //字符串
+                                    if (isListenerNotNull(listener))
+                                        listener.onSuccess((T) results);
+                                } else {//Object
+                                    if (isListenerNotNull(listener))
+                                        listener.onSuccess((T) new Gson().fromJson(results, listener.type));
+                                }
+                            } catch (Exception e) {
+                                Log.i(TAG, "出错", e);
+                                if (isListenerNotNull(listener))
+                                    listener.onError(e);
+                            }
                         }
                     });
                 }
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Class<T> clazz = GenericsUtils.getSuperClassGenricType(listener.getClass());
-                            if (clazz == String.class) {        //字符串
-                                if (isListenerNotNull(listener))
-                                    listener.onSuccess((T) results);
-                            } else {//Object
-                                if (isListenerNotNull(listener))
-                                   listener.onSuccess((T) new Gson().fromJson(results, listener.type));
-                            }
-                        } catch (Exception e) {
-                            Log.i(TAG, "出错", e);
-                            if (isListenerNotNull(listener))
-                                listener.onError(e);
-                        }
-                    }
-                });
             }
         });
     }

@@ -56,7 +56,7 @@ public class Http extends BaseHttp {
      * @param img
      */
     public static void  showimg(Context mtx, ImageView img,String url){
-        getInstance().baseDisplayImage(mtx,img,url,R.drawable.g4,R.drawable.g7);
+        getInstance().baseDisplayImage(mtx,img,url,R.drawable.g7,R.drawable.g4);
     }
 
     /**
