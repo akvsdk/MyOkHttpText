@@ -14,12 +14,13 @@
 
     <TextView
         android:id="@+id/tv_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom|right"
         android:textColor="#ffffff"
         android:textSize="24sp"
+        android:padding="10dp"
+        android:background="#90000000"
         android:textStyle="bold"
         android:visibility="visible"
         tools:background="#ffecb3"

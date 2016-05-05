@@ -43,7 +43,6 @@ public class AllFragment extends BaseFragment {
 
         adapter = new Alladapter(getActivity(), ganHuos);
         rcy.setAdapter(adapter);
-        //rcy.setOnScrollChangeListener(new HidingScrollListener(this));
         refresh = (MaterialRefreshLayout) view.findViewById(R.id.refresh);
         rcy.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter.setOnItemClickListener(new Alladapter.OnItemClickListener() {

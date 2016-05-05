@@ -70,7 +70,6 @@ public class Fuliadapter extends RecyclerView.Adapter<Fuliadapter.ViewHolder> {
         });
         GlideProxy.getInstance().loadImage(mtx, ganHuo.getUrl(), holder.img);
         holder.mTextView.setText(ganHuo.getPublishedAt().substring(0, 10));
-
     }
 
     public interface OnItemClickListener {
@@ -93,6 +92,5 @@ public class Fuliadapter extends RecyclerView.Adapter<Fuliadapter.ViewHolder> {
             mTextView = (TextView) itemView.findViewById(R.id.tv_time);
         }
     }
-
 
 }

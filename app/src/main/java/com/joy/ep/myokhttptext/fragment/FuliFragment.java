@@ -2,9 +2,9 @@ package com.joy.ep.myokhttptext.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +45,9 @@ public class FuliFragment extends BaseFragment {
         rcy.setAdapter(adapter);
         rcy.setLayoutManager(new LinearLayoutManager(getActivity()));
         refresh = (MaterialRefreshLayout) view.findViewById(R.id.refresh);
-        rcy.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+      //  rcy.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        rcy.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+
         adapter.setOnItemClickListener(new Fuliadapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, GanHuo bean) {
