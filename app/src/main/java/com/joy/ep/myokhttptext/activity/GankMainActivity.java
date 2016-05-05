@@ -1,6 +1,7 @@
 package com.joy.ep.myokhttptext.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -11,6 +12,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -127,6 +130,14 @@ public class GankMainActivity extends AppCompatActivity {
 
 
     private void switchFragment(Fragment fragment) {
+        Slide slideTransition;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //Gravity.START部分机型崩溃java.lang.IllegalArgumentException: Invalid slide direction
+            slideTransition = new Slide(Gravity.LEFT);
+            slideTransition.setDuration(700);
+            fragment.setEnterTransition(slideTransition);
+            fragment.setExitTransition(slideTransition);
+        }
         if (currentFragment == null || !fragment.getClass().getName().equals(currentFragment.getClass().getName())) {
             getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
             currentFragment = fragment;

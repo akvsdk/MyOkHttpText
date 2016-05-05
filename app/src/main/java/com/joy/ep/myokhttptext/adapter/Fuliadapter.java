@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
 
-import com.cjj.http.Http;
+import com.cjj.http.GlideProxy;
 import com.joy.ep.myokhttptext.R;
 import com.joy.ep.myokhttptext.enity.GanHuo;
 import com.joy.ep.myokhttptext.view.RatioImageView;
@@ -68,8 +68,9 @@ public class Fuliadapter extends RecyclerView.Adapter<Fuliadapter.ViewHolder> {
                 }
             }
         });
-        Http.showimg(mtx, holder.img, ganHuo.getUrl());
-        holder.mTextView.setText(ganHuo.getPublishedAt());
+        GlideProxy.getInstance().loadImage(mtx, ganHuo.getUrl(), holder.img);
+        holder.mTextView.setText(ganHuo.getPublishedAt().substring(0, 10));
+
     }
 
     public interface OnItemClickListener {
@@ -92,5 +93,6 @@ public class Fuliadapter extends RecyclerView.Adapter<Fuliadapter.ViewHolder> {
             mTextView = (TextView) itemView.findViewById(R.id.tv_time);
         }
     }
+
 
 }

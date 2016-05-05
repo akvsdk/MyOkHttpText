@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cjj.http.Http;
+import com.cjj.http.GlideProxy;
 import com.joy.ep.myokhttptext.R;
 import com.joy.ep.myokhttptext.enity.GanHuo;
 
@@ -65,7 +65,7 @@ public class Alladapter extends RecyclerView.Adapter<Alladapter.ViewHolder> {
         } else {
             holder.tv.setVisibility(View.GONE);
             holder.img.setVisibility(View.VISIBLE);
-            Http.showimg(mtx, holder.img, ganHuo.getUrl());
+            GlideProxy.getInstance().loadCircleImage(mtx, ganHuo.getUrl(), holder.img);
         }
     }
 
