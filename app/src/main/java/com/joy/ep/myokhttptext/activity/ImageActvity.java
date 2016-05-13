@@ -44,13 +44,12 @@ public class ImageActvity extends AppCompatActivity {
         Glide.with(this)
                 .load(getIntent().getStringExtra("url"))
                 .asBitmap()
-                .animate(com.cjj.http.R.anim.image_load)
+                .animate(R.anim.image_load)
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                         mImageView.setImageBitmap(resource);
                         attacher.update();
-//                girl = resource;
                     }
 
                     @Override

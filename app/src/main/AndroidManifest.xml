@@ -10,6 +10,9 @@
 
     <uses-permission-sdk-23 android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+
     <application
         android:name=".common.App"
         android:allowBackup="true"
@@ -31,6 +34,9 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activity.ImageActvity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activity.WebActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 

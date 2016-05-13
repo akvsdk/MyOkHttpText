@@ -19,6 +19,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         KLog.init(BuildConfig.LOG_DEBUG);
+        context = this.getApplicationContext();
     }
 
     public static Context getContext() {

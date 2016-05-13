@@ -19,12 +19,18 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.joy.ep.myokhttptext.R;
+import com.joy.ep.myokhttptext.enity.TnGou;
 import com.joy.ep.myokhttptext.fragment.AllFragment;
 import com.joy.ep.myokhttptext.fragment.AndroidFragment;
 import com.joy.ep.myokhttptext.fragment.FuliFragment;
 import com.joy.ep.myokhttptext.fragment.IosFragment;
 import com.joy.ep.myokhttptext.fragment.PlayFragment;
 import com.joy.ep.myokhttptext.fragment.ResFragment;
+import com.joy.ep.myokhttptext.http.AppDao;
+import com.joy.ep.myokhttptext.listener.CallbackListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * author   Joy
@@ -37,11 +43,11 @@ public class GankMainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private NavigationView navigationView;
     private CoordinatorLayout lay_content;
-    //    private ActionBar ab;
     private ActionBarDrawerToggle abdt;
-
     private Fragment currentFragment;
     private long exitTime;
+
+    private ArrayList<TnGou> bean = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,10 +65,6 @@ public class GankMainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setSubtitle("Gank.Io");
 
-//        ab = getSupportActionBar();
-//        ab.setDisplayHomeAsUpEnabled(true);
-//        ab.setHomeButtonEnabled(true);
-
         exitTime = System.currentTimeMillis();
 
         //开启汉堡动画
@@ -75,9 +77,25 @@ public class GankMainActivity extends AppCompatActivity {
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
-
+        getImag();
 
     }
+
+    public List<TnGou> getBean() {
+        return bean;
+    }
+
+    private void getImag() {
+        AppDao.getInstance().getImg(new CallbackListener<List<TnGou>>() {
+
+            @Override
+            public void onSuccess(List<TnGou> result) {
+                bean.addAll(result);
+            }
+        });
+
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

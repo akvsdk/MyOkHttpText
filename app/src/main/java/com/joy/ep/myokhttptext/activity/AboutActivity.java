@@ -121,7 +121,10 @@ public class AboutActivity extends AppCompatActivity {
         mStrings.add("com.android.support:cardview-v7:23.2.1");
         mStrings.add("com.youzan:titan:0.1.0");
         mStrings.add("com.cjj.materialrefeshlayout:library:1.3.0");
-        mStrings.add("com.github.zhaokaiqiang.klog:library:1.3.0");
+        mStrings.add("com.github.zhaokaiqiang.klog:library:1.4.0");
+        mStrings.add("com.squareup.okhttp:okhttp:2.5.0");
+        mStrings.add("com.github.bumptech.glide:glide:3.7.0");
+        mStrings.add("com.google.code.gson:gson:2.4");
 
     }
 

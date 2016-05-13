@@ -1,8 +1,9 @@
 package com.joy.ep.myokhttptext.http;
 
-import com.cjj.http.Http;
-import com.cjj.listener.CallbackListener;
+
 import com.joy.ep.myokhttptext.enity.GanHuo;
+import com.joy.ep.myokhttptext.enity.TnGou;
+import com.joy.ep.myokhttptext.listener.CallbackListener;
 
 import java.util.HashMap;
 import java.util.List;
@@ -68,6 +69,10 @@ public class AppDao {
         }
         String gank = "http://gank.io/api/data/" + type + "/30/" + page;
         Http.get(gank, listener);
+    }
+
+    public void getImg(CallbackListener<List<TnGou>> listener) {
+        HttpImp.get("http://www.tngou.net/tnfs/api/news?id=4&rows=50", listener);
     }
 
 }

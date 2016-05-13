@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
 
-import com.cjj.http.GlideProxy;
 import com.joy.ep.myokhttptext.R;
 import com.joy.ep.myokhttptext.enity.GanHuo;
+import com.joy.ep.myokhttptext.http.GlideProxy;
 import com.joy.ep.myokhttptext.view.RatioImageView;
 
 import java.util.ArrayList;

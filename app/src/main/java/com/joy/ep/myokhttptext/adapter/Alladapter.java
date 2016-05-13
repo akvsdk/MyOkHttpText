@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cjj.http.GlideProxy;
 import com.joy.ep.myokhttptext.R;
 import com.joy.ep.myokhttptext.enity.GanHuo;
+import com.joy.ep.myokhttptext.http.GlideProxy;
 
 import java.util.List;
 

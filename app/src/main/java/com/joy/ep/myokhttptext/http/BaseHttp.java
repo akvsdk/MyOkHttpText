@@ -1,4 +1,4 @@
-package com.cjj.http;
+package com.joy.ep.myokhttptext.http;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -11,9 +11,11 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.cjj.listener.CallbackListener;
-import com.cjj.util.GenericsUtils;
 import com.google.gson.Gson;
+import com.joy.ep.myokhttptext.common.App;
+import com.joy.ep.myokhttptext.listener.CallbackListener;
+import com.joy.ep.myokhttptext.util.GenericsUtils;
+import com.joy.ep.myokhttptext.util.StorageUtils;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
@@ -48,7 +50,7 @@ public class BaseHttp<T> {
 
     private static final String ERROR = "error";
     private static final String RESULTS = "results";
-    private final String HTTP_CACHE_FILENAME = "HttpCache";
+    private final String HTTP_CACHE_FILENAME = "OkHttpCache";
     Cache cache;
 
 
@@ -63,6 +65,21 @@ public class BaseHttp<T> {
         }
     };
 
+    public class CacheInterceptor implements Interceptor {
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Request request = chain.request();
+            Response response = chain.proceed(request);
+            Response response1 = response.newBuilder()
+                    .removeHeader("Pragma")
+                    .removeHeader("Cache-Control")
+                    //cache for 30 days
+                    .header("Cache-Control", "max-age=" + 60)
+                    .build();
+            return response1;
+        }
+    }
+
 
     protected BaseHttp() {
         mGson = new Gson();
@@ -74,9 +91,18 @@ public class BaseHttp<T> {
         mOkHttpClient.setReadTimeout(15000, TimeUnit.SECONDS);
         mOkHttpClient.setWriteTimeout(15000, TimeUnit.SECONDS);
         mOkHttpClient.setRetryOnConnectionFailure(true);
-        cache = new Cache(, 10 * 1024);
-        mOkHttpClient.setCache(cache);
-        mOkHttpClient.networkInterceptors().add(REWRITE_CACHE_CONTROL_INTERCEPTOR);
+
+        try {
+            File cacheFileDir = StorageUtils.getCacheDirectory(App.getContext());
+            File httpCacheDirectory = new File(cacheFileDir, HTTP_CACHE_FILENAME);
+            cache = new Cache(httpCacheDirectory, 10 * 1024);
+            mOkHttpClient.setCache(cache);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        mOkHttpClient.networkInterceptors().add(new CacheInterceptor());
     }
 
     protected static BaseHttp getInstance() {
@@ -204,7 +230,10 @@ public class BaseHttp<T> {
     }
 
     protected Request getBaseRequest(String url) {
-        Request request = new Request.Builder().url(url).tag(url).build();
+        Request request = new Request.Builder()
+                .url(url)
+                .tag(url)
+                .build();
         return request;
     }
 

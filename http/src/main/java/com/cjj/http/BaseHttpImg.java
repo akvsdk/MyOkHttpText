@@ -14,10 +14,8 @@ import com.bumptech.glide.Glide;
 import com.cjj.listener.CallbackListener;
 import com.cjj.util.GenericsUtils;
 import com.google.gson.Gson;
-import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -34,54 +32,31 @@ import java.net.CookiePolicy;
 import java.net.MalformedURLException;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by cjj on 2015/8/25.
  */
-public class BaseHttp<T> {
+public class BaseHttpImg<T> {
     private static final String TAG = "BaseHttp";
     private Gson mGson;
     private OkHttpClient mOkHttpClient;
     private Handler mHandler;
-    private static BaseHttp mBaseHttp;
+    private static BaseHttpImg mBaseHttp;
 
-    private static final String ERROR = "error";
-    private static final String RESULTS = "results";
-    private final String HTTP_CACHE_FILENAME = "HttpCache";
-    Cache cache;
+    private static final String STATUS = "status";
+    private static final String TNGOU = "tngou";
 
-
-    private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
-        @Override
-        public Response intercept(Chain chain) throws IOException {
-            Response originalResponse = chain.proceed(chain.request());
-            return originalResponse.newBuilder()
-                    .removeHeader("Pragma")
-                    .header("Cache-Control", String.format("max-age=%d", 60))
-                    .build();
-        }
-    };
-
-
-    protected BaseHttp() {
+    protected BaseHttpImg() {
         mGson = new Gson();
         mOkHttpClient = new OkHttpClient();
         mHandler = new Handler(Looper.getMainLooper());
         //cookie enabled
         mOkHttpClient.setCookieHandler(new CookieManager(null, CookiePolicy.ACCEPT_ORIGINAL_SERVER));
-        mOkHttpClient.setConnectTimeout(15000, TimeUnit.SECONDS);
-        mOkHttpClient.setReadTimeout(15000, TimeUnit.SECONDS);
-        mOkHttpClient.setWriteTimeout(15000, TimeUnit.SECONDS);
-        mOkHttpClient.setRetryOnConnectionFailure(true);
-        cache = new Cache(, 10 * 1024);
-        mOkHttpClient.setCache(cache);
-        mOkHttpClient.networkInterceptors().add(REWRITE_CACHE_CONTROL_INTERCEPTOR);
     }
 
-    protected static BaseHttp getInstance() {
+    protected static BaseHttpImg getInstance() {
         if (mBaseHttp == null) {
-            mBaseHttp = new BaseHttp();
+            mBaseHttp = new BaseHttpImg();
         }
         return mBaseHttp;
     }
@@ -230,26 +205,26 @@ public class BaseHttp<T> {
                 try {
                     jsonObject = new JSONObject(result);
 
-                    if (jsonObject.isNull(ERROR)) {
+                    if (jsonObject.isNull(STATUS)) {
                         listener.onFailure("error key not exists!!");
                         return;
                     }
                     //判断后台返回结果，true表示失败，false表示成功，失败则返回错误回调并结束请求
 
-                    if (jsonObject.getBoolean(ERROR)) {
+                    if (!jsonObject.getBoolean(STATUS)) {
                         listener.onFailure("request failure!!");
                         return;
                     }
 
                     //判断results字段是否存在，不存在返回时报回调并结束请求
-                    if (jsonObject.isNull(RESULTS)) {
+                    if (jsonObject.isNull(TNGOU)) {
                         listener.onFailure("results key not exists!!");
                         return;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                final String results = jsonObject.optString("results");
+                final String results = jsonObject.optString("tngou");
                 if (isListenerNotNull(listener)) {
                     mHandler.post(new Runnable() {
                         @Override

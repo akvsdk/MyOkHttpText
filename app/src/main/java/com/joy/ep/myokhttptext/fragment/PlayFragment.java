@@ -1,5 +1,6 @@
 package com.joy.ep.myokhttptext.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,13 +10,13 @@ import android.view.ViewGroup;
 
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
-import com.cjj.listener.CallbackListener;
 import com.joy.ep.myokhttptext.R;
+import com.joy.ep.myokhttptext.activity.WebActivity;
 import com.joy.ep.myokhttptext.adapter.Alladapter;
 import com.joy.ep.myokhttptext.common.BaseFragment;
 import com.joy.ep.myokhttptext.enity.GanHuo;
 import com.joy.ep.myokhttptext.http.AppDao;
-import com.joy.ep.myokhttptext.util.IntentUtils;
+import com.joy.ep.myokhttptext.listener.CallbackListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,12 @@ public class PlayFragment extends BaseFragment {
 
             @Override
             public void onItemClick(View v, GanHuo bean) {
-                IntentUtils.intUrl(getContext(), bean.getUrl());
+                Intent intent = new Intent(getActivity(), WebActivity.class);
+                intent.putExtra("url", bean.getUrl());
+                intent.putExtra("title", bean.getType());
+                intent.addFlags(2);
+                startActivity(intent);
+
             }
         });
         refresh.setLoadMore(true);

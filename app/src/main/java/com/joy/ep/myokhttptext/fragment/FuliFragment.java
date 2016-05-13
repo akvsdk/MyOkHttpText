@@ -2,22 +2,22 @@ package com.joy.ep.myokhttptext.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
-import com.cjj.listener.CallbackListener;
 import com.joy.ep.myokhttptext.R;
 import com.joy.ep.myokhttptext.activity.ImageActvity;
 import com.joy.ep.myokhttptext.adapter.Fuliadapter;
 import com.joy.ep.myokhttptext.common.BaseFragment;
 import com.joy.ep.myokhttptext.enity.GanHuo;
 import com.joy.ep.myokhttptext.http.AppDao;
+import com.joy.ep.myokhttptext.listener.CallbackListener;
 import com.socks.library.KLog;
 
 import java.util.ArrayList;
@@ -45,8 +45,8 @@ public class FuliFragment extends BaseFragment {
         rcy.setAdapter(adapter);
         rcy.setLayoutManager(new LinearLayoutManager(getActivity()));
         refresh = (MaterialRefreshLayout) view.findViewById(R.id.refresh);
-      //  rcy.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        rcy.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        rcy.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+       // rcy.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
         adapter.setOnItemClickListener(new Fuliadapter.OnItemClickListener() {
             @Override
