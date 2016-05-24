@@ -2,6 +2,8 @@ package com.joy.ep.myokhttptext.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,14 +48,15 @@ public class FuliFragment extends BaseFragment {
         rcy.setLayoutManager(new LinearLayoutManager(getActivity()));
         refresh = (MaterialRefreshLayout) view.findViewById(R.id.refresh);
         rcy.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-       // rcy.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        // rcy.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
         adapter.setOnItemClickListener(new Fuliadapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, GanHuo bean) {
                 Intent intent = new Intent(getActivity(), ImageActvity.class);
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),v,"share");
                 intent.putExtra("url", bean.getUrl());
-                startActivity(intent);
+                ActivityCompat.startActivity(getActivity(), intent, optionsCompat.toBundle());
             }
         });
         refresh.setLoadMore(true);

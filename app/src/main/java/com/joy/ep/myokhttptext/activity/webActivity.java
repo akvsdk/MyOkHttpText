@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.transition.Fade;
 import android.transition.Slide;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.webkit.WebChromeClient;
@@ -19,7 +20,7 @@ import android.widget.ImageView;
 
 import com.joy.ep.myokhttptext.R;
 import com.joy.ep.myokhttptext.enity.TnGou;
-import com.joy.ep.myokhttptext.http.GlideProxy;
+import com.joy.ep.myokhttptext.util.GlideProxy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,6 +135,14 @@ public class WebActivity extends AppCompatActivity {
         }
         webView.setVisibility(View.GONE);
         super.onBackPressed();
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

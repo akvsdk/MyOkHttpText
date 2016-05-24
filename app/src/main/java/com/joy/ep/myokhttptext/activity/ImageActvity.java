@@ -5,15 +5,19 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.joy.ep.myokhttptext.R;
+import com.joy.ep.myokhttptext.util.ShareElement;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -28,6 +32,7 @@ public class ImageActvity extends AppCompatActivity {
     private AppBarLayout mbar;
     private ImageView mImageView;
     PhotoViewAttacher attacher;
+    boolean isToolBarHiding = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,7 +44,24 @@ public class ImageActvity extends AppCompatActivity {
 
     private void initView() {
         mImageView = (ImageView) findViewById(R.id.meizhi_img);
+
+        mImageView.setImageDrawable(ShareElement.shareDrawable);
+        ViewCompat.setTransitionName(mImageView, "share");
+
         attacher = new PhotoViewAttacher(mImageView);
+
+        attacher.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
+            @Override
+            public void onPhotoTap(View view, float x, float y) {
+                hideOrShowToolBar();
+            }
+
+            @Override
+            public void onOutsidePhotoTap() {
+                hideOrShowToolBar();
+            }
+        });
+
 
         Glide.with(this)
                 .load(getIntent().getStringExtra("url"))
@@ -81,4 +103,17 @@ public class ImageActvity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    protected void hideOrShowToolBar() {
+        mbar.animate()
+                .translationY(isToolBarHiding ? 0 : -mbar.getHeight())
+                .setInterpolator(new DecelerateInterpolator(2))
+                .start();
+        isToolBarHiding = !isToolBarHiding;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ShareElement.shareDrawable = null;
+    }
 }

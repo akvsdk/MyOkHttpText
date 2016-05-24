@@ -1,4 +1,4 @@
-package com.joy.ep.myokhttptext.http;
+package com.joy.ep.myokhttptext.util;
 
 import android.content.Context;
 import android.net.Uri;
@@ -6,7 +6,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.joy.ep.myokhttptext.R;
-import com.joy.ep.myokhttptext.util.GlideCircleTransform;
 
 
 /**

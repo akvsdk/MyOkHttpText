@@ -10,7 +10,8 @@ import android.widget.TextView;
 
 import com.joy.ep.myokhttptext.R;
 import com.joy.ep.myokhttptext.enity.GanHuo;
-import com.joy.ep.myokhttptext.http.GlideProxy;
+import com.joy.ep.myokhttptext.util.GlideProxy;
+import com.joy.ep.myokhttptext.util.ShareElement;
 import com.joy.ep.myokhttptext.view.RatioImageView;
 
 import java.util.ArrayList;
@@ -60,11 +61,12 @@ public class Fuliadapter extends RecyclerView.Adapter<Fuliadapter.ViewHolder> {
             lp.height = mHeights.get(position);
             holder.img.setLayoutParams(lp);
         }
+        ShareElement.shareDrawable =  holder.img.getDrawable();
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.onItemClick(holder.itemView, ganHuo);
+                    onItemClickListener.onItemClick(holder.img, ganHuo);
                 }
             }
         });

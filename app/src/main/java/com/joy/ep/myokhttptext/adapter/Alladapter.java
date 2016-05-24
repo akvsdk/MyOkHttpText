@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.joy.ep.myokhttptext.R;
 import com.joy.ep.myokhttptext.enity.GanHuo;
-import com.joy.ep.myokhttptext.http.GlideProxy;
+import com.joy.ep.myokhttptext.util.GlideProxy;
 
 import java.util.List;
 

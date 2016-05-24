@@ -2,6 +2,7 @@ package com.joy.ep.myokhttptext.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.joy.ep.myokhttptext.R;
+import com.joy.ep.myokhttptext.activity.GankMainActivity;
 import com.joy.ep.myokhttptext.activity.WebActivity;
 import com.joy.ep.myokhttptext.adapter.Alladapter;
 import com.joy.ep.myokhttptext.common.BaseFragment;
@@ -53,9 +55,9 @@ public class IosFragment extends BaseFragment {
                 Intent intent = new Intent(getActivity(), WebActivity.class);
                 intent.putExtra("url", bean.getUrl());
                 intent.putExtra("title", bean.getType());
+                intent.putParcelableArrayListExtra("bean", (ArrayList<? extends Parcelable>) ((GankMainActivity) getActivity()).getBean());
                 intent.addFlags(2);
                 startActivity(intent);
-
             }
         });
         refresh.setLoadMore(true);

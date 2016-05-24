@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:padding="25dp"
         android:textColor="@color/material_blue"
-
         />
 
 </android.support.v7.widget.CardView>
